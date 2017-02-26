@@ -26,7 +26,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# To add integration of rails and react
+# To add integration of Rails and React.js
 gem 'react_on_rails', '~> 6'
 
 # Use Capistrano for deployment
