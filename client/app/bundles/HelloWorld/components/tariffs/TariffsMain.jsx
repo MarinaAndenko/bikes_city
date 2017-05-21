@@ -6,9 +6,7 @@ import {Link} from "react-router-dom";
 import pluralize from 'pluralize';
 
 import Navbar from "../layout/Navbar";
-import OneDayTariff from './OneDayTariff';
-import MonthTariff from './MonthTariff';
-import SeasonTariff from './SeasonTariff';
+import TariffDescription from './TariffDescription';
 
 const styles = {
   headline: {
@@ -48,6 +46,25 @@ class TariffsMain extends React.Component {
     return newTariffs;
   }
 
+  setSeasonTariffs(tariffs){
+    let newTariffs = [], season = null;
+    tariffs.map(function(tariff) {
+      switch(tariff.start_point) {
+        case 3:
+          season = 'Spring';
+            break;
+        case 6:
+          season = 'Summer';
+            break;
+        case 9:
+          season = 'Autumn';
+            break;
+      }
+      newTariffs.push({ period: season, price: tariff.price });
+    });
+    return newTariffs;
+  }
+
   componentWillMount(){
     $.get( '/api/tariffs', function(data) {
       let forDay = data.day.sort(this.compare);
@@ -56,7 +73,7 @@ class TariffsMain extends React.Component {
       this.setState({
         dayTariffs: this.setDayMonthTariffs(forDay, 'hour'),
         monthTariffs: this.setDayMonthTariffs(forMonth, 'month'),
-        seasonTariffs: forSeason,
+        seasonTariffs: this.setSeasonTariffs(forSeason),
       })
     }.bind(this)).fail(function() {});
   }
@@ -69,19 +86,19 @@ class TariffsMain extends React.Component {
           <Tab label="Pay as You Go">
             <div className="tab-layout">
               <h2 style={styles.headline}>Pay as You Go</h2>
-              <OneDayTariff tariffs={this.state.dayTariffs}/>
+              <TariffDescription tariffs={this.state.dayTariffs}/>
             </div>
           </Tab>
           <Tab label="Monthly" >
             <div className="tab-layout">
               <h2 style={styles.headline}>Monthly</h2>
-              <OneDayTariff tariffs={this.state.monthTariffs}/>
+              <TariffDescription tariffs={this.state.monthTariffs}/>
             </div>
           </Tab>
           <Tab label="Seasonal">
             <div className="tab-layout">
               <h2 style={styles.headline}>Seasonal</h2>
-              <SeasonTariff/>
+              <TariffDescription tariffs={this.state.seasonTariffs}/>
             </div>
           </Tab>
         </Tabs>
