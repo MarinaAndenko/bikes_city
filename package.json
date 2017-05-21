@@ -10,5 +10,9 @@
     "postinstall": "cd client && yarn install",
     "rails-server": "echo 'visit http://localhost:3000/hello_world' && foreman start -f Procfile.dev",
     "test": "rspec"
+  },
+  "dependencies": {
+    "pluralize": "^4.0.0",
+    "underscore": "^1.8.3"
   }
 }

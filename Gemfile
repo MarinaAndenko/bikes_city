@@ -29,6 +29,10 @@ gem 'jbuilder', '~> 2.5'
 # To add integration of Rails and React.js
 gem 'react_on_rails', '~> 6'
 
+gem 'responders', '~> 2.2'
+gem 'pry', '~> 0.10.4'
+gem 'time_difference', '~> 0.5.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

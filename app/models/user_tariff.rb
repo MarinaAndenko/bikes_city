@@ -1,0 +1,2 @@
+class UserTariff < ApplicationRecord
+end

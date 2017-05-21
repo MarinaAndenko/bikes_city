@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423195220) do
+ActiveRecord::Schema.define(version: 20170521124942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,21 +25,10 @@ ActiveRecord::Schema.define(version: 20170423195220) do
   create_table "bikes", force: :cascade do |t|
     t.string   "identifier"
     t.integer  "bike_type"
-    t.date     "start_date"
-    t.string   "tech_inspection_date"
-    t.boolean  "blocked",              default: false
-    t.boolean  "stolen",               default: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.integer  "address_id"
-    t.integer  "bike_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address_id"], name: "index_locations_on_address_id", using: :btree
-    t.index ["bike_id"], name: "index_locations_on_bike_id", using: :btree
+    t.integer  "address_id"
+    t.index ["address_id"], name: "index_bikes_on_address_id", using: :btree
   end
 
   create_table "payments", force: :cascade do |t|
@@ -48,8 +37,10 @@ ActiveRecord::Schema.define(version: 20170423195220) do
     t.string   "card_number"
     t.date     "expiration_date"
     t.string   "security_code"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.float    "sum"
+    t.boolean  "confirmed",       default: false
     t.index ["user_id"], name: "index_payments_on_user_id", using: :btree
   end
 
@@ -58,16 +49,24 @@ ActiveRecord::Schema.define(version: 20170423195220) do
     t.integer  "user_id"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.float    "sum"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bike_id"], name: "index_rentals_on_bike_id", using: :btree
     t.index ["user_id"], name: "index_rentals_on_user_id", using: :btree
   end
 
+  create_table "tariff_durations", force: :cascade do |t|
+    t.integer  "tariff_id"
+    t.integer  "start_point"
+    t.integer  "end_point"
+    t.float    "price"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["tariff_id"], name: "index_tariff_durations_on_tariff_id", using: :btree
+  end
+
   create_table "tariffs", force: :cascade do |t|
     t.integer  "tariff_type"
-    t.float    "price"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -77,7 +76,6 @@ ActiveRecord::Schema.define(version: 20170423195220) do
     t.integer  "user_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.float    "sum"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tariff_id"], name: "index_user_tariffs_on_tariff_id", using: :btree
@@ -91,16 +89,15 @@ ActiveRecord::Schema.define(version: 20170423195220) do
     t.string   "phone_number"
     t.date     "birthdate"
     t.integer  "user_type"
-    t.boolean  "blocked",      default: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_foreign_key "locations", "addresses"
-  add_foreign_key "locations", "bikes"
+  add_foreign_key "bikes", "addresses"
   add_foreign_key "payments", "users"
   add_foreign_key "rentals", "bikes"
   add_foreign_key "rentals", "users"
+  add_foreign_key "tariff_durations", "tariffs"
   add_foreign_key "user_tariffs", "tariffs"
   add_foreign_key "user_tariffs", "users"
 end
