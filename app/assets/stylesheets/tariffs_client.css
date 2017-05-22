@@ -1,6 +1,4 @@
-.tab-layout {
-  position: relative;
-  left: 10%;
-  right: 10%;
-  width: 80%;
+.assign-tariff-button{
+  padding:10%;
+  text-align: center;
 }

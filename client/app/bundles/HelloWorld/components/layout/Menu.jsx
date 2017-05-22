@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-
+import {Link} from "react-router-dom";
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -10,7 +10,6 @@ class Menu extends React.Component{
     let userMenu = null;
     if (this.props.loggedIn) {
       userMenu =  <div>
-        <MenuItem primaryText="Addresses" />
         <MenuItem primaryText="Sign out" />
        </div>;
     } else {
@@ -26,7 +25,8 @@ class Menu extends React.Component{
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
         <MenuItem primaryText="Prices & Tariffs" />
-        <MenuItem primaryText="Profile" />
+        <MenuItem primaryText="Rent a Bike" containerElement={<Link to="/rentals/new"/>}/>
+        <MenuItem primaryText="Addresses" />
         {userMenu}
       </IconMenu>
     );

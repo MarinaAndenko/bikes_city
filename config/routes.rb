@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     resources :addresses
     resources :locations
     resources :payments
-    resources :rentals
+    resources :rentals do
+      get 'check_bike', on: :collection
+    end
     resources :tariffs
     resources :user_tariffs
   end

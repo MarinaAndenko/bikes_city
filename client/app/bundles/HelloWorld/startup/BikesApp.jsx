@@ -6,9 +6,10 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import configureStore from '../store/helloWorldStore';
 // import HelloWorldContainer from '../containers/HelloWorldContainer';
-import HelloWorld from '../components/HelloWorld';
-import Navbar from '../components/layout/Navbar';
+// import HelloWorld from '../components/HelloWorld';
+// import Navbar from '../components/layout/Navbar';
 import TariffsMain from '../components/tariffs/TariffsMain';
+import NewRental from '../components/rentals/NewRental';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -21,9 +22,10 @@ const HelloWorldApp = (props, _railsContext) => (
     <MuiThemeProvider>
       <BrowserRouter history={history}>
         <main>
-          <Route path="/bikes" component={Navbar} />
+          {/*<Route path="/bikes" component={Navbar} />*/}
           <Route path="/tariffs" component={TariffsMain} />
-          <Route path="/hello_world" component={HelloWorld} />
+          {/*<Route path="/hello_world" component={HelloWorld} />*/}
+          <Route path="/rentals/new" component={NewRental} />
         </main>
       </BrowserRouter>
     </MuiThemeProvider>

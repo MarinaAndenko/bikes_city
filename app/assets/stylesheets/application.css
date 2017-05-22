@@ -7,10 +7,17 @@ body{
   margin: 0px;
 }
 
-.react-layout-components--box {
+/*.react-layout-components--box {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+}*/
+
+.tab-layout {
+  position: relative;
+  left: 10%;
+  right: 10%;
+  width: 80%;
 }

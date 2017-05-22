@@ -86,19 +86,19 @@ class TariffsMain extends React.Component {
           <Tab label="Pay as You Go">
             <div className="tab-layout">
               <h2 style={styles.headline}>Pay as You Go</h2>
-              <TariffDescription tariffs={this.state.dayTariffs}/>
+              <TariffDescription tariffs={this.state.dayTariffs} tarriffType='day'/>
             </div>
           </Tab>
           <Tab label="Monthly" >
             <div className="tab-layout">
               <h2 style={styles.headline}>Monthly</h2>
-              <TariffDescription tariffs={this.state.monthTariffs}/>
+              <TariffDescription tariffs={this.state.monthTariffs} tarriffType='month'/>
             </div>
           </Tab>
           <Tab label="Seasonal">
             <div className="tab-layout">
               <h2 style={styles.headline}>Seasonal</h2>
-              <TariffDescription tariffs={this.state.seasonTariffs}/>
+              <TariffDescription tariffs={this.state.seasonTariffs} tarriffType='season'/>
             </div>
           </Tab>
         </Tabs>
