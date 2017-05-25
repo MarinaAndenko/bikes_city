@@ -1,23 +1,20 @@
 import React from 'react'
 import { Provider } from 'react-redux';
-// import { browserHistory } from 'react-router'
 import { BrowserRouter, Route } from 'react-router-dom'
-// import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import configureStore from '../store/BikesAppStore';
-// import HelloWorldContainer from '../containers/HelloWorldContainer';
-import Welcome from '../components/Welcome';
-// import Navbar from '../components/layout/Navbar';
-import TariffsMain from '../components/tariffs/TariffsMain';
-import NewRental from '../components/rentals/NewRental';
-
-import BikesMain from '../components/admin/bikes/BikesMain';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-// const history = (props) => syncHistoryWithStore(browserHistory, configureStore(props))
+import Welcome from '../components/Welcome';
+import BikesMain from '../components/admin/bikes/BikesMain';
+import TariffsMain from '../components/tariffs/TariffsMain';
+import NewRental from '../components/rentals/NewRental';
+
+const history = (props) => syncHistoryWithStore(browserHistory, configureStore(props))
 
 const BikesApp = (props, _railsContext) => (
   <Provider store={configureStore(props)}>
