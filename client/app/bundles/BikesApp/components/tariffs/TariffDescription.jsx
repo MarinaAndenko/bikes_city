@@ -36,8 +36,16 @@ class TariffDescription extends React.Component {
       });
     }
 
-    let newRoute = this.props.tarriffType == 'day' ? <Link to="/rentals/new"/> : <Link to="/user_tariffs/new"/>
-
+    let newRoute = null;
+    let newLabel = null;
+    if(this.props.tarriffType == 'day'){
+      newRoute = <Link to="/rentals/new"/>;
+      newLabel = 'Take a Bike!';
+    }else{
+      newRoute = <Link to="/user_tariffs/new"/>;
+      newLabel = 'Take a tariff!';
+    }
+    // this.props.tarriffType == 'day' ? <Link to="/rentals/new"/> : <Link to="/user_tariffs/new"/>
     return(
       <div>
         <Table
@@ -56,7 +64,7 @@ class TariffDescription extends React.Component {
           </TableBody>
         </Table>
         <div className='assign-tariff-button'>
-         <RaisedButton label="Take a Bike!" primary={true} containerElement={newRoute}/>
+         <RaisedButton label={newLabel} primary={true} containerElement={newRoute}/>
         </div>
       </div>
     );

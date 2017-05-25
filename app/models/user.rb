@@ -7,4 +7,10 @@ class User < ApplicationRecord
   has_many :payments
 
   enum user_type: USER_TYPES
+
+  # def current_tariff
+  #   if user.user_tariffs.empty?
+  #     if user.rentals.
+  #   end
+  # end
 end

@@ -24,7 +24,7 @@ class Menu extends React.Component{
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-        <MenuItem primaryText="Prices & Tariffs" />
+        <MenuItem primaryText="Prices & Tariffs" containerElement={<Link to="/tariffs"/>}/>
         <MenuItem primaryText="Rent a Bike" containerElement={<Link to="/rentals/new"/>}/>
         <MenuItem primaryText="Addresses" />
         {userMenu}

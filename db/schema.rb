@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170521162737) do
+ActiveRecord::Schema.define(version: 20170522121015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,9 +24,12 @@ ActiveRecord::Schema.define(version: 20170521162737) do
   create_table "bikes", force: :cascade do |t|
     t.string   "identifier"
     t.integer  "bike_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "address_id"
+    t.date     "start_date"
+    t.boolean  "blocked",    default: false
+    t.boolean  "stolen",     default: false
     t.index ["address_id"], name: "index_bikes_on_address_id", using: :btree
   end
 
@@ -36,10 +39,8 @@ ActiveRecord::Schema.define(version: 20170521162737) do
     t.string   "card_number"
     t.date     "expiration_date"
     t.string   "security_code"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.float    "sum"
-    t.boolean  "confirmed",       default: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["user_id"], name: "index_payments_on_user_id", using: :btree
   end
 
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170521162737) do
     t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "sum"
     t.index ["bike_id"], name: "index_rentals_on_bike_id", using: :btree
     t.index ["user_id"], name: "index_rentals_on_user_id", using: :btree
   end
@@ -77,6 +79,7 @@ ActiveRecord::Schema.define(version: 20170521162737) do
     t.date     "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "sum"
     t.index ["tariff_id"], name: "index_user_tariffs_on_tariff_id", using: :btree
     t.index ["user_id"], name: "index_user_tariffs_on_user_id", using: :btree
   end

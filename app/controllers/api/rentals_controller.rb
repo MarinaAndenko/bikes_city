@@ -17,12 +17,7 @@ class Api::RentalsController < ApplicationController
     address_bikes = Address.find_by(id: params[:address]).bikes
     bike = address_bikes.public_send(params[:type].underscore).first
     payment = Payment.new(payment_params)
-    # binding.pry
-    if payment.save
-      bike.update(address: nil)
-      Rental.create(user: User.first, bike: bike, start_time: Time.now)
-      render json: { bike_identifier: bike.identifier }
-    else
+    if payment.errors.any?
       render json: {
         errors: {
           card_holder: payment.errors[:card_holder].first,
@@ -30,6 +25,10 @@ class Api::RentalsController < ApplicationController
           security_code: payment.errors[:security_code].first
         }
       }, status: 422
+    else
+      bike.update(address: nil)
+      # Rental.create(user: User.first, bike: bike, start_time: Time.now)
+      render json: { bike_identifier: bike.identifier }
     end
   end
 

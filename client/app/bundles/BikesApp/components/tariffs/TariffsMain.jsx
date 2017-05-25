@@ -71,7 +71,7 @@ class TariffsMain extends React.Component {
       let forMonth = data.month.sort(this.compare);
       let forSeason = data.season.sort(this.compare);
       this.setState({
-        dayTariffs: this.setDayMonthTariffs(forDay, 'hour'),
+        dayTariffs: this.setDayMonthTariffs(forDay, 'day'),
         monthTariffs: this.setDayMonthTariffs(forMonth, 'month'),
         seasonTariffs: this.setSeasonTariffs(forSeason),
       })
