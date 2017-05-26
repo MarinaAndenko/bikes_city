@@ -14,7 +14,7 @@ class Navbar extends React.Component {
             </a>
           }
           iconElementRight={
-            <Menu loggedIn={this.props.loggedId} />
+            <Menu/>
           }
         />
       </div>
@@ -22,10 +22,4 @@ class Navbar extends React.Component {
   }
 }
 
-Navbar.propTypes = {
-  pageTitle: PropTypes.string.isRequired,
-  loggedId: PropTypes.bool.isRequired
-};
-
 export default Navbar;
-

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
 import Box from 'react-layout-components';
-import {Link} from "react-router-dom";
 import pluralize from 'pluralize';
 
 import Navbar from "../layout/Navbar";
@@ -40,8 +39,12 @@ class TariffsMain extends React.Component {
     tariffs.map(function(tariff) {
       if(tariff.start_point == 0)
         newTariffs.push({ period: 'Till '+tariff.end_point+' '+pluralize(q, tariff.end_point), price: tariff.price });
-      else
-        newTariffs.push({ period: tariff.start_point+' - '+tariff.end_point+' '+pluralize(q, tariff.end_point), price: tariff.price });
+      else{
+        if(tariff.start_point == tariff.end_point)
+          newTariffs.push({ period: tariff.start_point+' '+pluralize(q, 1), price: tariff.price });
+        else
+          newTariffs.push({ period: tariff.start_point+' - '+tariff.end_point+' '+pluralize(q, tariff.end_point), price: tariff.price });
+      }
     });
     return newTariffs;
   }
@@ -102,7 +105,6 @@ class TariffsMain extends React.Component {
             </div>
           </Tab>
         </Tabs>
-        <Link to={"/tariffs"}>Press me</Link>
       </div>
     );
   }

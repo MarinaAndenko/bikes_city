@@ -11,6 +11,7 @@ injectTapEventPlugin();
 
 import Welcome from '../components/Welcome';
 import BikesMain from '../components/admin/bikes/BikesMain';
+import AdminTariffsMain from '../components/admin/tariffs/AdminTariffsMain';
 import TariffsMain from '../components/tariffs/TariffsMain';
 import NewRental from '../components/rentals/NewRental';
 
@@ -23,6 +24,7 @@ const BikesApp = (props, _railsContext) => (
         <main>
           <Route exact path="/" component={Welcome} />
           <Route exact path="/admin/bikes" component={BikesMain} />
+          <Route exact path="/admin/tariffs" component={AdminTariffsMain} />
           <Route exact path="/tariffs" component={TariffsMain} />
           <Route exact path="/rentals/new" component={NewRental} />
         </main>

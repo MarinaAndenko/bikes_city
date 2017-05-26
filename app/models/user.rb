@@ -8,9 +8,7 @@ class User < ApplicationRecord
 
   enum user_type: USER_TYPES
 
-  # def current_tariff
-  #   if user.user_tariffs.empty?
-  #     if user.rentals.
-  #   end
-  # end
+  def current_tariff
+    user_tariffs.where('user_tariffs.end_date > ?', Date.today).take
+  end
 end

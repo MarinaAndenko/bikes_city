@@ -7,14 +7,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class Menu extends React.Component{
   render(){
-    let userMenu = null;
-    if (this.props.loggedIn) {
-      userMenu =  <div>
-        <MenuItem primaryText="Sign out" />
-       </div>;
-    } else {
-      userMenu = <MenuItem primaryText="Sign in" />;
-    }
+    let signIn = <MenuItem primaryText="Sign in" />;
 
     return(
       <IconMenu
@@ -24,10 +17,13 @@ class Menu extends React.Component{
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-        <MenuItem primaryText="Prices & Tariffs" containerElement={<Link to="/tariffs"/>}/>
-        <MenuItem primaryText="Rent a Bike" containerElement={<Link to="/rentals/new"/>}/>
-        <MenuItem primaryText="Addresses" />
-        {userMenu}
+        <MenuItem primaryText="Tariffs" containerElement={<Link to="/admin/tariffs"/>}/>
+        <MenuItem primaryText="Bikes" containerElement={<Link to="/admin/bikes"/>}/>
+        
+        {/*<MenuItem primaryText="Prices & Tariffs" containerElement={<Link to="/tariffs"/>}/>
+                <MenuItem primaryText="Rent a Bike" containerElement={<Link to="/rentals/new"/>}/>
+                <MenuItem primaryText="Addresses" />*/}
+        <MenuItem primaryText="Sign out" />
       </IconMenu>
     );
   }

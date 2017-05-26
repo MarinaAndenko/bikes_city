@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  get 'hello_world', to: 'hello_world#index'
-  root to: 'hello_world#index'
+  root to: 'welcome#index'
   
-  resources :rentals
-  resources :tariffs
+  resources :rentals, only: :new
+  resources :tariffs, only: :index
   resources :user_tariffs
 
   namespace :admin do
-    resources :bikes
-    resources :addresses
-    resources :tariffs
+    resources :bikes, only: :index
+    resources :tariffs, only: :index
   end
 
   namespace :api do
@@ -24,7 +22,6 @@ Rails.application.routes.draw do
       resources :bikes do
         get 'filter', on: :collection
       end
-      resources :addresses
     end
   end
 end

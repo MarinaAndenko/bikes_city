@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522121015) do
+ActiveRecord::Schema.define(version: 20170525224222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,17 +31,6 @@ ActiveRecord::Schema.define(version: 20170522121015) do
     t.boolean  "blocked",    default: false
     t.boolean  "stolen",     default: false
     t.index ["address_id"], name: "index_bikes_on_address_id", using: :btree
-  end
-
-  create_table "payments", force: :cascade do |t|
-    t.integer  "user_id"
-    t.text     "card_holder"
-    t.string   "card_number"
-    t.date     "expiration_date"
-    t.string   "security_code"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["user_id"], name: "index_payments_on_user_id", using: :btree
   end
 
   create_table "rentals", force: :cascade do |t|
@@ -96,7 +85,6 @@ ActiveRecord::Schema.define(version: 20170522121015) do
   end
 
   add_foreign_key "bikes", "addresses"
-  add_foreign_key "payments", "users"
   add_foreign_key "rentals", "bikes"
   add_foreign_key "rentals", "users"
   add_foreign_key "tariff_durations", "tariffs"

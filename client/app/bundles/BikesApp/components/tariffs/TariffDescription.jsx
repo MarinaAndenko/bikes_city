@@ -25,6 +25,7 @@ const styles = {
 class TariffDescription extends React.Component {
   render(){
     let setTariffs = [];
+    console.log(this.props);
     if (_.isEmpty(this.props.tariffs) == false) {
       this.props.tariffs.map(function(tariff, i) {
         setTariffs.push(
@@ -45,7 +46,7 @@ class TariffDescription extends React.Component {
       newRoute = <Link to="/user_tariffs/new"/>;
       newLabel = 'Take a tariff!';
     }
-    // this.props.tarriffType == 'day' ? <Link to="/rentals/new"/> : <Link to="/user_tariffs/new"/>
+
     return(
       <div>
         <Table

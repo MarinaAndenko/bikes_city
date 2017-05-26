@@ -1,6 +1,4 @@
 class Api::Admin::BikesController < ApplicationController
-  before_action :bikes_list, except: [:new, :edit]
-
   def index
     render json: bikes_list
   end
@@ -15,7 +13,6 @@ class Api::Admin::BikesController < ApplicationController
 
   def create
     Bike.create(bike_params)
-    # binding.pry
     render json: bikes_list
   end
 
@@ -25,7 +22,7 @@ class Api::Admin::BikesController < ApplicationController
   end
 
   def update
-    Bike.update(bike_params)
+    Bike.find(params[:id]).update(bike_params)
     render json: bikes_list
   end
 
@@ -46,6 +43,6 @@ class Api::Admin::BikesController < ApplicationController
 
   def bike_params
     address = Address.find_by(full_address: params[:address]).id
-    params(:identifier, :start_date, :bike_type).merge(address_id: address)
+    params.require(:bike).permit(:identifier, :start_date, :bike_type).merge(address_id: address)
   end
 end

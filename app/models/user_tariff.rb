@@ -1,3 +1,4 @@
 class UserTariff < ApplicationRecord
-  # scope :last_tariff, -> { order(:end_date).first }
+  belongs_to :user
+  belongs_to :tariff_duration
 end

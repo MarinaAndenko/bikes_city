@@ -4,8 +4,6 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import AutoComplete from 'material-ui/AutoComplete';
 
 const style = {
@@ -19,17 +17,20 @@ class BikeDialog extends React.Component {
     this.state = {
       start_date: null,
       bike_type: null,
+      address: null,
     };
   }
 
   handleSave = () => {
     let start_date = this.state.start_date || this.props.dialogParams.start_date;
     let bike_type = this.state.bike_type || this.props.dialogParams.bike_type;
+    let address = this.state.address || this.props.dialogParams.address;
     this.props.handleSave(
       'create',
       this.props.dialogParams.identifier,
       start_date,
-      bike_type
+      bike_type,
+      address
     )
     this.setState({
       start_date: null,
@@ -46,6 +47,12 @@ class BikeDialog extends React.Component {
   handleTypeChange = (value) => {
     this.setState({
       bike_type: value
+    });
+  }
+
+  handleAddressChange = (value) => {
+    this.setState({
+      address: value
     });
   }
 
@@ -105,7 +112,7 @@ class BikeDialog extends React.Component {
             style={style}
             underlineShow={false}
             filter={AutoComplete.caseInsensitiveFilter}
-            onUpdateInput={this.handleTypeChange}
+            onUpdateInput={this.handleAddressChange}
           />
           <Divider />
         </Dialog>

@@ -1,3 +1,3 @@
-class TariffsController < ApplicationController
+class Admin::TariffsController < ApplicationController
   def index; end
 end

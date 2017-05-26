@@ -6,7 +6,7 @@ class Api::RentalsController < ApplicationController
   end
 
   def check_bike
-    address_bikes = Address.find_by(id: params[:address])&.bikes
+    address_bikes = Address.find_by(id: params[:address])&.avaliable_bikes
     bike = address_bikes.public_send(params[:type].underscore).first
     unless bike
       render json: { error_message: 'No free bikes for current address' }, status: 422
@@ -14,33 +14,19 @@ class Api::RentalsController < ApplicationController
   end
 
   def create
-    address_bikes = Address.find_by(id: params[:address]).bikes
+    address_bikes = Address.find_by(id: params[:address])&.avaliable_bikes
     bike = address_bikes.public_send(params[:type].underscore).first
-    payment = Payment.new(payment_params)
-    if payment.errors.any?
-      render json: {
-        errors: {
-          card_holder: payment.errors[:card_holder].first,
-          card_number: payment.errors[:card_number].first,
-          security_code: payment.errors[:security_code].first
-        }
-      }, status: 422
-    else
+    payment_params = params[:payment]
+    payment = Payment.new(
+      card_holder: payment_params[:card_holder], card_number: payment_params[:card_number],
+      expiration_date: payment_params[:expiration_date], security_code: payment_params[:security_code]
+    )
+    if payment.valid?
       bike.update(address: nil)
-      # Rental.create(user: User.first, bike: bike, start_time: Time.now)
-      render json: { bike_identifier: bike.identifier }
+      rental = Rental.create(user: User.first, bike: bike, start_time: Time.now, sum: Rental.set_correct_sum)
+      render json: { bike_identifier: bike.identifier, sum: rental.sum }
+    else
+      render json: { errors: payment.errors }, status: 422
     end
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
-  private
-
-  def payment_params
-    params.require(:payment).permit(:card_holder, :card_number, :expiration_date, :security_code).merge(user: User.first)
   end
 end

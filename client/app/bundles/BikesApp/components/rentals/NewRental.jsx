@@ -1,5 +1,4 @@
 import React from 'react';
-// import {Link} from "react-router-dom";
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {
@@ -33,7 +32,8 @@ class NewRental extends React.Component {
       errorNumberText: null,
       errorExpDateText: null,
       errorSeCodeText: null,
-      qrValue: 'lol',
+      qrValue: 'null',
+      paidSum: null,
       errorsAvaliable: false
     };
   }
@@ -55,11 +55,12 @@ class NewRental extends React.Component {
     if(stepIndex == 1){
       this.saveRental();
     }
-    if (this.state.errorsAvaliable == false)
-      this.setState({
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 1,
-      });
+    // if (this.state.errorsAvaliable == false){
+    //   this.setState({
+    //     stepIndex: stepIndex + 1,
+    //     finished: stepIndex >= 1,
+    //   });
+    // }
   }
 
   saveRental(){
@@ -70,15 +71,19 @@ class NewRental extends React.Component {
         expiration_date: this.state.valueExpDate, security_code: this.state.valueSeCode },
       },
       function(data) {
-        debugger;
+        // debugger;
         this.setState({
           qrValue: data.bike_identifier,
-          errorsAvaliable: false
+          paidSum: data.sum,
+          errorsAvaliable: false,
+          stepIndex: this.state.stepIndex + 1,
+          finished: this.state.stepIndex >= 1,
         })
       }.bind(this)).fail(function(data) {
         this.setState({
           errorHolderText: data.responseJSON.errors.card_holder,
           errorNumberText: data.responseJSON.errors.card_number,
+          errorExpDateText: data.responseJSON.errors.expiration_date,
           errorSeCodeText: data.responseJSON.errors.security_code,
           errorsAvaliable: true
         });
@@ -90,7 +95,9 @@ class NewRental extends React.Component {
     $.get( '/api/rentals/check_bike', { type: this.state.valueType, address: this.state.valueAddress },
       function(data) {
         this.setState({
-          errorsAvaliable: false
+          errorsAvaliable: false,
+          stepIndex: this.state.stepIndex + 1,
+          finished: this.state.stepIndex >= 1,
         })
       }.bind(this)).fail(function() {
         this.setState({
@@ -220,6 +227,7 @@ class NewRental extends React.Component {
           <div style={contentStyle}>
             {finished ? (
               <div style={{textAlign: 'center', paddingTop: '10%'}}>
+                <p>Paid sum is {this.state.paidSum} UAH</p>
                 <QRCode value={this.state.qrValue} /><br />
                 <p>Your bike's genereted QR code</p>
               </div>

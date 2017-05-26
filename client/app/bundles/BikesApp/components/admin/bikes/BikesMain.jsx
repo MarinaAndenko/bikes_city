@@ -1,7 +1,4 @@
 import React, { PropTypes } from 'react';
-// import {Tabs, Tab} from 'material-ui/Tabs';
-// import Slider from 'material-ui/Slider';
-// import Box from 'react-layout-components';
 import {Link} from "react-router-dom";
 import {
   Table,
@@ -21,8 +18,7 @@ import TextField from 'material-ui/TextField';
 
 import Navbar from "../../layout/Navbar";
 import BikeDialog from "./BikeDialog";
-import ConfirmDialog from "./ConfirmDialog";
-// import TariffDescription from './TariffDescription';
+import ConfirmDialog from "../shared/ConfirmDialog";
 
 const styles = {
   table: {
@@ -64,7 +60,8 @@ class BikesMain extends React.Component {
       openConfirmDialog: false,
       dialogParams: {}
     };
-    this.handleCreateNew = ::this.handleCreateNew;
+
+    this.handleOpenConfirmDialog = this.handleOpenConfirmDialog.bind(this);
   }
 
   compare(a,b){
@@ -107,7 +104,7 @@ class BikesMain extends React.Component {
     this.setState({openDialog: false});
   };
 
-  handleOpenConfirmDialog = () => {
+  handleOpenConfirmDialog(){
     this.setState({openConfirmDialog: true});
   }
 
@@ -115,13 +112,15 @@ class BikesMain extends React.Component {
     this.setState({openConfirmDialog: false});
   }
 
-  handleSave = (action, identifier, start_date, bike_type) => {
-    console.log(identifier);
+  handleSave = (action, identifier, start_date, bike_type, address) => {
     if(action == 'create'){
       $.post( '/api/admin/bikes',{
-        identifier: identifier,
-        start_date: start_date,
-        bike_type: bike_type,
+        bike:{
+          identifier: identifier,
+          start_date: start_date,
+          bike_type: bike_type,
+        },
+        address: address
       }, function(data) {
         this.setState({
           bikesList: data,
@@ -180,56 +179,57 @@ class BikesMain extends React.Component {
                 showExpandableButton={false}
               />
               <CardActions>
-                <FlatButton label="Add New" onTouchTap={this.handleCreateNew} />
+                <FlatButton label="Add New" onTouchTap={this.handleCreateNew } />
                 <TextField
                   hintText="Filter by Identifier"
                   onChange={this.handleFilter}
                 />
               </CardActions>
+              <Table
+                fixedHeader={styles.table.fixedHeader}
+                fixedFooter={styles.table.fixedFooter}
+                selectable={styles.table.selectable}
+                multiSelectable={styles.table.multiSelectable}
+                height={'440px'}
+              >
+                <TableHeader
+                displaySelectAll={styles.table.showCheckboxes}
+                adjustForCheckbox={styles.table.showCheckboxes}
+                >
+                  <TableRow>
+                    <TableHeaderColumn>Identifier</TableHeaderColumn>
+                    <TableHeaderColumn>Date of Introduction</TableHeaderColumn>
+                    <TableHeaderColumn>Type</TableHeaderColumn>
+                    <TableHeaderColumn>Address</TableHeaderColumn>
+                    <TableHeaderColumn>Number of Rentals</TableHeaderColumn>
+                    <TableHeaderColumn>On Tech Examination</TableHeaderColumn>
+                    <TableHeaderColumn>Was Slolen?</TableHeaderColumn>
+                    <TableHeaderColumn>Actions</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody
+                  displayRowCheckbox={styles.table.showCheckboxes}
+                  deselectOnClickaway={styles.table.deselectOnClickaway}
+                  showRowHover={styles.table.showRowHover}
+                  stripedRows={styles.table.stripedRows}
+                >
+                { setBikes }
+                </TableBody>
+              </Table>
             </Card>
 
-            <Table
-              fixedHeader={styles.table.fixedHeader}
-              fixedFooter={styles.table.fixedFooter}
-              selectable={styles.table.selectable}
-              multiSelectable={styles.table.multiSelectable}
-              height={'450px'}
-            >
-              <TableHeader
-              displaySelectAll={styles.table.showCheckboxes}
-              adjustForCheckbox={styles.table.showCheckboxes}
-              >
-                <TableRow>
-                  <TableHeaderColumn>Identifier</TableHeaderColumn>
-                  <TableHeaderColumn>Date of Introduction</TableHeaderColumn>
-                  <TableHeaderColumn>Type</TableHeaderColumn>
-                  <TableHeaderColumn>Address</TableHeaderColumn>
-                  <TableHeaderColumn>Number of Rentals</TableHeaderColumn>
-                  <TableHeaderColumn>On Tech Examination</TableHeaderColumn>
-                  <TableHeaderColumn>Was Slolen?</TableHeaderColumn>
-                  <TableHeaderColumn>Actions</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody
-                displayRowCheckbox={styles.table.showCheckboxes}
-                deselectOnClickaway={styles.table.deselectOnClickaway}
-                showRowHover={styles.table.showRowHover}
-                stripedRows={styles.table.stripedRows}
-              >
-              { setBikes }
-              </TableBody>
-            </Table>
           </div>
           <BikeDialog
             openDialog={this.state.openDialog}
             handleCloseDialog={this.handleCloseDialog}
             dialogParams={this.state.dialogParams}
             handleSave={this.handleSave}
+            dialogTitle='Add New Bike'
           />
-          {/*<ConfirmDialog
-                      openDialog={this.state.openConfirmDialog}
-                      handleCloseDialog={this.handleCloseConfirmDialog}
-                    />*/}
+          <ConfirmDialog
+            openDialog={this.state.openConfirmDialog}
+            handleCloseDialog={this.handleCloseConfirmDialog}
+          />
       </div>
     );
   }
